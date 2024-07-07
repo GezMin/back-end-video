@@ -1,14 +1,13 @@
-import { UserModule } from './../user/user.module'
 import { Module } from '@nestjs/common'
-import { AuthService } from './auth.service'
-import { AuthController } from './auth.controller'
-import { JwtStrategy } from './jwt.strategy'
-import { UserService } from 'src/user/user.service'
-import { PrismaService } from 'src/prisma.service'
-import { ConfigModule } from '@nestjs/config'
+import { ConfigModule, ConfigService } from '@nestjs/config'
 import { JwtModule } from '@nestjs/jwt'
-import { ConfigService } from '@nestjs/config'
 import { getJwtConfig } from 'src/config/jwt.config'
+import { PrismaService } from 'src/prisma.service'
+import { UserModule } from 'src/user/user.module'
+import { UserService } from 'src/user/user.service'
+import { AuthController } from './auth.controller'
+import { AuthService } from './auth.service'
+import { JwtStrategy } from './jwt.strategy'
 
 @Module({
 	imports: [
