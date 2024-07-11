@@ -21,7 +21,7 @@ import { UpdateUserDto } from './dto/update-user.dto'
 export class UserController {
 	constructor(private readonly userService: UserService) {}
 
-	@Get()
+	@Get('profile')
 	@Auth()
 	async getProfile(@CurrentUser('id') id: string) {
 		return await this.userService.getById(id)
