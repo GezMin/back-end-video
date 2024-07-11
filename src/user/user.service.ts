@@ -2,6 +2,8 @@ import { Injectable } from '@nestjs/common'
 import { hash } from 'argon2'
 import { AuthDto } from 'src/auth/dto/auth.dto'
 import { PrismaService } from 'src/prisma.service'
+import { returnUserObject } from './return-user.object'
+import { UpdateUserDto } from './dto/update-user.dto'
 
 @Injectable()
 export class UserService {
@@ -31,5 +33,57 @@ export class UserService {
 		return this.prisma.user.create({
 			data: user,
 		})
+	}
+
+	async toggleFavorite(movieId: string, userId: string) {
+		const user = await this.getById(userId)
+
+		const isExists = user.favorites.some(movie => movie.id === movieId)
+
+		await this.prisma.user.update({
+			where: { id: userId },
+			data: {
+				favorites: {
+					set: isExists
+						? user.favorites.filter(movie => movie.id === movieId)
+						: [...user.favorites, { id: movieId }],
+				},
+			},
+		})
+	}
+
+	/* queries admin */
+
+	async getAll(searchTerm?: string) {
+		if (searchTerm) {
+			this.search(searchTerm)
+		}
+
+		return await this.prisma.user.findMany({
+			select: returnUserObject,
+			orderBy: { createdAt: 'desc' },
+		})
+	}
+
+	private async search(searchTerm: string) {
+		return await this.prisma.user.findMany({
+			where: {
+				OR: [
+					{ name: { contains: searchTerm, mode: 'insensitive' } },
+					{ email: { contains: searchTerm, mode: 'insensitive' } },
+				],
+			},
+		})
+	}
+
+	async update(id: string, dto: UpdateUserDto) {
+		return await this.prisma.user.update({
+			where: { id },
+			data: dto,
+		})
+	}
+
+	async delete(id: string) {
+		return await this.prisma.user.delete({ where: { id } })
 	}
 }
