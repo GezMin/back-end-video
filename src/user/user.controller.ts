@@ -27,7 +27,7 @@ export class UserController {
 		return await this.userService.getById(id)
 	}
 
-	@Post('profile/favotites')
+	@Post('profile/favorites')
 	@HttpCode(200)
 	@Auth()
 	async toggleFavorite(

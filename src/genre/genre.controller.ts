@@ -61,9 +61,11 @@ export class GenreController {
 	@Delete(':id')
 	@Auth('admin')
 	async delete(@Param('id') id: string) {
-		const deletedGenre = await this.genreService.getById(id)
+		const deletedIdGenre = await this.genreService.getById(id)
 
-		if (!deletedGenre) throw new NotFoundException('Genre not found')
+		if (!deletedIdGenre) throw new NotFoundException('Genre not found')
+
+		const deletedGenre = await this.genreService.delete(id)
 
 		return deletedGenre
 	}
