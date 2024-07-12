@@ -63,7 +63,7 @@ model Genre {
   updatedAt DateTime @updatedAt @map("updated_at")
 
   name        String
-  slag        String @unique
+  slug        String @unique
   description String
 
   icon String
@@ -79,7 +79,7 @@ model Actor {
   updatedAt DateTime @updatedAt @map("updated_at")
 
   name String
-  slag String @unique
+  slug String @unique
 
   photoUrl String @map("photo_url")
 
