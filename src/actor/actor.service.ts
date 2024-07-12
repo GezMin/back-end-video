@@ -2,7 +2,11 @@ import { Injectable, NotFoundException } from '@nestjs/common'
 import { PrismaService } from 'src/prisma.service'
 import { generateSlug } from 'src/utils/generate-slug'
 import { UpdateActorDto } from './dto/update-actor.dto'
-import { returnActorObject } from './return-actor.object'
+import {
+	returnActorObject,
+	returnDeleteActorObject,
+	returnErrorSlugActorObject,
+} from './return-actor.object'
 
 @Injectable()
 export class ActorService {
@@ -63,6 +67,20 @@ export class ActorService {
 	}
 
 	async create() {
+		const actorSlug = await this.prisma.actor.findUnique({
+			where: {
+				slug: '',
+			},
+			select: returnErrorSlugActorObject,
+		})
+
+		if (actorSlug) {
+			throw new NotFoundException({
+				message: 'There is an empty slug, update the actor by ID',
+				actor: actorSlug,
+			})
+		}
+
 		const actor = await this.prisma.actor.create({
 			data: {
 				name: '',
@@ -92,6 +110,7 @@ export class ActorService {
 			where: {
 				id,
 			},
+			select: returnDeleteActorObject,
 		})
 	}
 }

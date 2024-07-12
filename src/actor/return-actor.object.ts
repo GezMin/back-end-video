@@ -8,7 +8,16 @@ export const returnActorObject: Prisma.ActorSelect = {
 	photoUrl: true,
 	movies: {
 		select: {
-			id: true
-		}
-	}
+			id: true,
+		},
+	},
+}
+
+export const returnErrorSlugActorObject: Prisma.ActorSelect = {
+	id: true,
+	slug: true,
+}
+export const returnDeleteActorObject: Prisma.ActorSelect = {
+	id: true,
+	name: true,
 }
