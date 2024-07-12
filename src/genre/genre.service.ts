@@ -1,6 +1,9 @@
 import { Injectable, NotFoundException } from '@nestjs/common'
 import { PrismaService } from 'src/prisma.service'
-import { returnGenreObject } from './return-genre.object'
+import {
+	returnDeleteGenreObject,
+	returnGenreObject,
+} from './return-genre.object'
 import { generateSlug } from 'src/utils/generate-slug'
 import { UpdateGenreDto } from './dto/update-genre.dto'
 
@@ -95,6 +98,7 @@ export class GenreService {
 			where: {
 				id,
 			},
+			select: returnDeleteGenreObject,
 		})
 	}
 }

@@ -8,3 +8,8 @@ export const returnGenreObject: Prisma.GenreSelect = {
 	description: true,
 	icon: true,
 }
+
+export const returnDeleteGenreObject: Prisma.GenreSelect = {
+	id: true,
+	name: true,
+}
