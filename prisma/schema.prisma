@@ -16,7 +16,7 @@ model User {
   password String
 
   name       String @default("No name")
-  avatarPath String @default("/uploads/default-avatar.png") @map("avatar_path")
+  avatarPath String @default("/uploads/default-avatar.jpg") @map("avatar_path")
 
   role         UserRole @default(USER)
   isHasPremium Boolean  @default(false) @map("is_has_premium")
