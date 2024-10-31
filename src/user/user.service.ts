@@ -45,7 +45,7 @@ export class UserService {
 			data: {
 				favorites: {
 					set: isExists
-						? user.favorites.filter(movie => movie.id === movieId)
+						? user.favorites.filter(movie => movie.id !== movieId)
 						: [...user.favorites, { id: movieId }],
 				},
 			},
